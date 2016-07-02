@@ -8,8 +8,8 @@ div#synclock {
 
 div#synclock>div.synclock-text {
   position: absolute;
-  top: 65px;
-  left: 105px;
+  top: 90px;
+  left: 102px;
   text-align: center;
 }
 
