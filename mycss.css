@@ -1,0 +1,20 @@
+div#synclock {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  margin-top: -240px;
+  margin-left: -240px;
+}
+
+div#synclock>div.synclock-text {
+  position: absolute;
+  top: 65px;
+  left: 105px;
+  text-align: center;
+}
+
+div#synclock>canvas.synclock-bgimg {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}

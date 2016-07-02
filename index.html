@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=0.5, maximum-scale=0.8">
+    <title>Synclock</title>
+
+    <!-- CSS / JS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.3.0/css/flat-ui.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
+    <link rel="stylesheet" href="mycss.css">
+    <script src="https://npmcdn.com/vue@1.0.24/dist/vue.min.js"></script>
+    <script type="text/javascript">
+        /* global Vue */
+        Vue.config.delimiters = ['${', '}'];
+    </script>
+</head>
+
+<body>
+  <div class="container">
+    <!-- タイトルとか -->
+    <h3>Synclock</h3>
+    <p>
+      Start Syncボタンで
+      <a href="http://www2.nict.go.jp/aeri/sts/tsp/PubNtp/clients.html">NICT日本標準時プロジェクト</a>
+      のNTPサーバーに同期を開始します。
+      <small>※「ポーリングは16秒以上間隔を空けてください」との注意書きがありますので、あまり頻繁なアクセスはお避け下さい。</small>
+    </p>
+
+    <!--synclock本体  -->
+    <div id="synclock">
+
+      <!-- 背景のゲージ -->
+      <canvas class="synclock-bgimg" id="background" width="480" height="480"></canvas>
+      <canvas class="synclock-bgimg" id="gauge" width="480" height="480"></canvas>
+
+      <!-- 文字部分 -->
+      <div class="synclock-text">
+
+        <!-- 日付 -->
+        <h4 class="mbs">
+          ${synctime | time-format 'YYYY/MM/DD (ddd)'}
+        </h4>
+
+        <!-- 時刻 -->
+        <h1 class="mtn">
+          ${synctime | time-format 'H:mm:ss'}<small>${synctime | time-format '.S'}</small>
+        </h1>
+
+        <!-- 同期トグル用ボタン -->
+        <div v-if="sync" style="margin-left:-30px;">
+          <button class="btn btn-primary btn-lg" style="width:200px;" @click="toggleSync">
+            <i class="fa fa-pause mrm"></i>Stop Sync
+          </button>
+        </div>
+        <div v-else style="margin-left:-30px;">
+          <button class="btn btn-lg" style="width:200px;" @click="toggleSync">
+            <i class="fa fa-play mrm"></i>Start Sync
+          </button>
+        </div>
+
+        <!-- 同期間隔 -->
+        <h5 class="mtl mbs">sync interval</h5>
+        <h3 class="mtn mbn">
+          <a href="javascript:void(0);" @click="downSyncInterval"><i class="fa fa-caret-left mrm"></i></a>
+          ${syncInterval} [sec]
+          <a href="javascript:void(0);" @click="upSyncInterval"><i class="fa fa-caret-right mlm"></i></a>
+        </h3>
+
+        <!-- SyncNow -->
+        <h5 v-if="syncNow" class="mts text-primary">Sync Now!</h5>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script src="https://code.jquery.com/jquery-2.2.3.min.js"
+          integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="
+          crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.3.0/js/flat-ui.min.js" ></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/locale/en.js"></script>
+  <script src="synclock.js"></script>
+  <script src="myjs.js"></script>
+</body>
+</html>
